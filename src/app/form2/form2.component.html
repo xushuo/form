@@ -1,0 +1,11 @@
+<h1>form2</h1>
+<form action="" [formGroup]="formModel" (submit)="onSubmit()">
+  名称<input type="text" formControlName="user">
+  <div>
+    电话<input type="number" formControlName="tel"> 地址<input type="text" formControlName="address">
+  </div>
+  <div formGroupName="passGroup">
+    密码：<input type="password" formControlName="pass"> 确认密码：<input type="password" formControlName="repass">
+  </div>
+  <button type="submit">注册</button>
+</form>
