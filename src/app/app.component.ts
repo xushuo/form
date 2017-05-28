@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app works!';
+  onSubmit(val: any){
+    console.log(val);
+  }
 }
