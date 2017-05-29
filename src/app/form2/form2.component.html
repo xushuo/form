@@ -1,11 +1,41 @@
 <h1>form2</h1>
 <form action="" [formGroup]="formModel" (submit)="onSubmit()">
-  名称<input type="text" formControlName="user">
+  名称<input type="text" formControlName="user" [class.hasError]="formModel.get('user').invalid && formModel.get('user').touched ">
+ <div [hidden]="formModel.get('user').valid || formModel.get('user').untouched ">
+   <div [hidden]="!formModel.hasError('required','user')" >
+     用户名必填
+   </div>
+   <div [hidden]="!formModel.hasError('minlength','user')">
+     用户名最小长度为6
+   </div>
+ </div>
   <div>
-    电话<input type="number" formControlName="tel"> 地址<input type="text" formControlName="address">
+    电话<input type="number" formControlName="tel">
+    <div [hidden]="formModel.get('tel').valid|| formModel.get('tel').pristine">
+      <div [hidden]="!formModel.hasError('tel','tel')">
+        电话格式不对
+      </div>
+      <div [hidden]="!formModel.get('tel').pending">
+        正在校验电话合法性
+      </div>
+    </div>
+
+    地址<input type="text" formControlName="address">
   </div>
+
   <div formGroupName="passGroup">
-    密码：<input type="password" formControlName="pass"> 确认密码：<input type="password" formControlName="repass">
+    密码：<input type="password" formControlName="pass">
+    <div [hidden]="!formModel.hasError('minlength',['passGroup','pass'])">
+      密码最小长度为6 == 检查的字段嵌套在，另外一个group里面的话，就得转换成数组形式，如上
+    </div>
+    确认密码：<input type="password" formControlName="repass">
+    <div [hidden]="!formModel.hasError('equal','passGroup')" >
+      {{formModel.getError('equal','passGroup')?.desc}}
+      两次密码不对
+    </div>
   </div>
   <button type="submit">注册</button>
 </form>
+<div >
+  {{formModel.status}}
+</div>
